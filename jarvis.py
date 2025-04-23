@@ -1,3 +1,4 @@
+import speedtest
 import win32com.client
 import pywhatkit as kit
 import winshell
@@ -12,7 +13,7 @@ import wikipedia,sys
 import eel
 import pygame.mixer as sound
 
-from speedtest import Speedtest
+from speedtest import *
 import pvporcupine
 from hugchat.hugchat import ChatBot
 import struct,pyaudio
@@ -102,7 +103,7 @@ def is_recycle_bin_empty():
 
 def check_internet_speed():
     global results
-    st = Speedtest()
+    st = speedtest()
     down = st.download()
     up = st.upload()
     st.results.share()
