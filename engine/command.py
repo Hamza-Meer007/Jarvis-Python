@@ -12,16 +12,16 @@ engine.setProperty('voice',voice[0].id)
 def speak(audio):
     audio = str(audio)
     engine.say(audio)
-    eel.DisplayMessage(audio)()
-    eel.receiverText(audio)
+    # eel.DisplayMessage(audio)()
+    # eel.receiverText(audio)
     engine.runAndWait()
 
-
+@eel.expose
 def takecommand():
     r = sr.Recognizer()
     with sr.Microphone() as source:
         print("Listening....")
-        eel.DisplayMessage("Listening....")()
+        eel.DisplayMessage("Listening....")
         r.pause_threshold=1
         r.adjust_for_ambient_noise(source)
         audio = r.listen(source,timeout=10,phrase_time_limit=7)
@@ -30,16 +30,19 @@ def takecommand():
     
     try:
         print("Recognizing.....")
-        eel.DisplayMessage("Recognizing....")()
+        eel.DisplayMessage("Recognizing....")
         query = r.recognize_google(audio,language="en-in")
         print(f"user said {query}")
 
-        # eel.DisplayMessage(query)()
+        eel.DisplayMessage(query)
         query = query.replace('jarvis','')
-        # speak(query)
+        query = query.replace('Jarvis','')
+        speak(query)
         sleep(2)
+        eel.ShowHood()
        
 
     except Exception as e: 
         return ''
     return query.lower()
+

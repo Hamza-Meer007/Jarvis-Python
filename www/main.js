@@ -15,11 +15,11 @@ $(document).ready(function () {
 
     var siriWave = new SiriWave({
         container: document.getElementById("siri-container"),
-        width: 640,
+        width: 800,
         height: 200,
         style:"ios9",
-        amplitude:"2.5",
-        speed:"0.9",
+        amplitude:"1",
+        speed:"0.40",
         autostart: true
       });
 
@@ -40,10 +40,11 @@ $(document).ready(function () {
     $("#Micbtn").click(function () { 
 
 
-        console.log("play");
-        eel.play()()
+        
+        eel.playassistantsound()
         $("#Oval").attr("hidden", true);
         $("#SiriWave").attr("hidden", false);
+        eel.takecommand()()
         eel.allcommands()(function (response) {
             console.log(response);
         });

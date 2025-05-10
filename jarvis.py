@@ -2,7 +2,7 @@ import speedtest
 import win32com.client
 import pywhatkit as kit
 import winshell
-from command import *
+from engine.command import *
 import datetime,webbrowser,random
 from requests import get
 import time,os,pyjokes
@@ -11,23 +11,12 @@ import pyautogui as pg
 import instadownloader,instaloader
 import wikipedia,sys
 import eel
-import pygame.mixer as sound
+
 
 from speedtest import *
 import pvporcupine
 from hugchat.hugchat import ChatBot
 import struct,pyaudio
-
-sound.init()
-
-@eel.expose
-def play():
-
-    music1= 'www\\Assets\\start_sound.mp3'
-    sound.music.load(music1)
-    sound.music.play()
-
-
 
 def hotword():
     porcupine=None
@@ -144,7 +133,7 @@ def allcommands(message = 1):
     global task
 
     if message == 1:
-        wish()  
+        # wish()  
         loc = takecommand()
         eel.DisplayMessage(loc)
         query = loc.replace('jarvis','')
