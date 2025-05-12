@@ -1,7 +1,8 @@
 import eel
 import os
 from jarvis import *
-from engine.command import *
+from engine.command import allcommands
+
 from engine.features import playassistantsound
 def start():
    
@@ -11,3 +12,5 @@ def start():
     playassistantsound()
     eel.start('index.html',mode= None,host ='localhost',block=True)
 
+if __name__=="__main__":
+    start()
