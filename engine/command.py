@@ -4,8 +4,8 @@ from time import sleep
 import speech_recognition as sr
 import eel
 
-from features import closeCommands, openCommands, playYoutube
-from helper import is_running, speak
+from .features import closeCommands, openCommands, playYoutube
+from .helper import is_running, speak
 
 
 
@@ -17,7 +17,7 @@ def takecommand():
     r = sr.Recognizer()
     with sr.Microphone() as source:
         print("Listening....")
-        # eel.DisplayMessage("Listening....")
+        eel.DisplayMessage("Listening....")
         r.pause_threshold=1
         r.adjust_for_ambient_noise(source)
         audio = r.listen(source,timeout=10,phrase_time_limit=7)
@@ -26,15 +26,15 @@ def takecommand():
     
     try:
         print("Recognizing.....")
-        # eel.DisplayMessage("Recognizing....")
+        eel.DisplayMessage("Recognizing....")
         query = r.recognize_google(audio,language="en-in")
         print(f"user said {query}")
 
-        # eel.DisplayMessage(query)
+        eel.DisplayMessage(query)
         query = query.replace('jarvis','')
         query = query.replace('Jarvis','')
         print(query)
-        speak(query)
+        # speak(query)
         
        
 
@@ -45,21 +45,23 @@ def takecommand():
 @eel.expose
 def allcommands():
     global task
-    query = takecommand()
-    query = query.lower()
-    if "open" in query:
-        openCommands(query) 
-    elif "close" in query:
-       closeCommands(query)
-    elif "on youtube" in query:
-        playYoutube(query)
-    
-    else:
-        pass
-if __name__ == "__main__":
-    allcommands()
+    try:
+        query = takecommand()
+        query = query.lower()
+        if "open" in query:
+            openCommands(query) 
+        elif "close" in query:
+            closeCommands(query)
+        elif "on youtube" in query:
+            playYoutube(query)
+        
+        else:
+            pass
+    except Exception as e:
+        print(f"Error: {e}")
 
-    # eel.ShowHood()    
+
+    eel.ShowHood()    
 # @eel.expose
 # def allcommands(message = 1):
 #     global task

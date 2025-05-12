@@ -1,52 +1,56 @@
+import csv
 import sqlite3
 
-# Connect to SQLite database (or create it if it doesn't exist)
-conn = sqlite3.connect('apps_database.db')
-cursor = conn.cursor()
+con = sqlite3.connect("jarvis.db")
+cursor = con.cursor()
 
-# Create tables for system apps and web apps
-cursor.execute('''
-CREATE TABLE IF NOT EXISTS system_apps (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    app_name TEXT NOT NULL,
-    app_path TEXT NOT NULL
-)
-''')
+query = "CREATE TABLE IF NOT EXISTS sys_command(id integer primary key, name VARCHAR(100), path VARCHAR(1000))"
+cursor.execute(query)
 
-cursor.execute('''
-CREATE TABLE IF NOT EXISTS web_apps (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    app_name TEXT NOT NULL,
-    app_url TEXT NOT NULL
-)
-''')
+# query = "INSERT INTO sys_command VALUES (null,'Any desk', 'C:\\Program Files (x86)\\AnyDesk\\AnyDesk.exe')"
+# cursor.execute(query)
+# con.commit()
 
-# Insert sample data into system_apps table
-system_apps = [
-    ('File Explorer', 'C:/Windows/explorer.exe'),
-    ('Notepad', 'C:/Windows/System32/notepad.exe'),
-    ('Calculator', 'C:/Windows/System32/calc.exe')
-]
+query = "CREATE TABLE IF NOT EXISTS web_command(id integer primary key, name VARCHAR(100), url VARCHAR(1000))"
+cursor.execute(query)
 
-cursor.executemany('''
-INSERT INTO system_apps (app_name, app_path)
-VALUES (?, ?)
-''', system_apps)
+# query = "INSERT INTO web_command VALUES (null,'google', 'https://www.google.com/')"
+# cursor.execute(query)
+# con.commit()
 
-# Insert sample data into web_apps table
-web_apps = [
-    ('Google', 'https://www.google.com'),
-    ('YouTube', 'https://www.youtube.com'),
-    ('GitHub', 'https://github.com')
-]
 
-cursor.executemany('''
-INSERT INTO web_apps (app_name, app_url)
-VALUES (?, ?)
-''', web_apps)
+# testing module
+app_name = "google"
+cursor.execute('SELECT url FROM web_command WHERE name IN (?)', (app_name,))
+results = cursor.fetchall()
+print(results[0][0])
 
-# Commit changes and close the connection
-conn.commit()
-conn.close()
+# Create a table with the desired columns
+#cursor.execute('''CREATE TABLE IF NOT EXISTS contacts (id integer primary key, name VARCHAR(200), mobile_no VARCHAR(255), email VARCHAR(255) NULL)''')
 
-print("Databases and sample data created successfully.")
+
+# Specify the column indices you want to import (0-based index)
+# Example: Importing the 1st and 3rd columns
+# desired_columns_indices = [0, 30]
+
+# # Read data from CSV and insert into SQLite table for the desired columns
+# with open('contacts.csv', 'r', encoding='utf-8') as csvfile:
+#     csvreader = csv.reader(csvfile)
+#     for row in csvreader:
+#         selected_data = [row[i] for i in desired_columns_indices]
+#         cursor.execute(''' INSERT INTO contacts (id, 'name', 'mobile_no') VALUES (null, ?, ?);''', tuple(selected_data))
+
+# # Commit changes and close connection
+# con.commit()
+# con.close()
+
+# query = "INSERT INTO contacts VALUES (null,'pawan', '1234567890', 'null')"
+# cursor.execute(query)
+# con.commit()
+
+# query = 'kunal'
+# query = query.strip().lower()
+
+# cursor.execute("SELECT mobile_no FROM contacts WHERE LOWER(name) LIKE ? OR LOWER(name) LIKE ?", ('%' + query + '%', query + '%'))
+# results = cursor.fetchall()
+# print(results[0][0])
