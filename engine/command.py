@@ -4,9 +4,8 @@ from time import sleep
 import speech_recognition as sr
 import eel
 
-from .features import closeCommands, openCommands, playYoutube
+from .features import closeCommands, openCommands, playYoutube,findContact, whatsApp
 from .helper import is_running, speak
-
 
 
 
@@ -43,17 +42,44 @@ def takecommand():
     return query
 
 @eel.expose
-def allcommands():
+def allcommands(message=1):
     global task
-    try:
+    if message == 1:
         query = takecommand()
         query = query.lower()
+        eel.senderText(query)
+    else:
+        query = message
+        query = query.lower()
+        eel.senderText(query)
+        
+    try:
         if "open" in query:
             openCommands(query) 
         elif "close" in query:
             closeCommands(query)
         elif "on youtube" in query:
             playYoutube(query)
+        elif "send message" in query or "phone call" in query or "video call" in query:
+            contact_no, name = findContact(query)
+            if(contact_no != 0):
+
+                flag = ""
+                if "send message" in query:
+                    flag = 'message'
+                    speak("what message to send")
+                    query = takecommand()
+                                    
+                elif "phone call" in query:
+                    flag = 'call'
+                else:
+                    flag = 'video call'
+                                    
+                whatsApp(contact_no, query, flag, name)
+            else:
+                speak("Contact not found")
+                print("Contact not found")
+
         
         else:
             pass

@@ -1,5 +1,7 @@
 import multiprocessing
 
+from engine.features import hotword
+
 def start_jarvis():
     print('Process 1 is running')
     from main import start
@@ -8,7 +10,6 @@ def start_jarvis():
 
 def listen_hotword():
     print('Process 2 is running')
-    from jarvis import hotword
     hotword()
 if __name__ == '__main__':
     p1 = multiprocessing.Process(target=start_jarvis)

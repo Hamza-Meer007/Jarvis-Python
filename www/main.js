@@ -44,7 +44,6 @@ $(document).ready(function () {
         eel.playassistantsound()
         $("#Oval").attr("hidden", true);
         $("#SiriWave").attr("hidden", false);
-        eel.takecommand()()
         eel.allcommands()(function (response) {
             console.log(response);
         });
@@ -55,11 +54,10 @@ $(document).ready(function () {
         
         if (e.key === 'j' && e.metaKey) {
            
-            eel.play()()
+            eel.playassistantsound()
             $("#Oval").attr("hidden", true);
             $("#SiriWave").attr("hidden", false);
-            
-            
+           
             eel.allcommands()()
         }
         
@@ -73,7 +71,7 @@ $(document).ready(function () {
 
             $("#Oval").attr("hidden", true);
             $("#SiriWave").attr("hidden", false);
-            eel.allcommands(message)();
+            eel.allcommands(message);
             $("#chatbox").val("")
             $("#Micbtn").attr('hidden', false);
             $("#SendBtn").attr('hidden', true);
@@ -85,8 +83,8 @@ $(document).ready(function () {
     // toogle fucntion to hide and display mic and send button 
     function ShowHideButton(message) {
         if (message.length == 0) {
-            $("#SendBtn").attr('hidden', true);
             $("#Micbtn").attr('hidden', false);
+            $("#SendBtn").attr('hidden', true);
         }
         else {
             $("#Micbtn").attr('hidden', true);

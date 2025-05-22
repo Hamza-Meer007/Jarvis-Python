@@ -20,13 +20,13 @@ cursor.execute(query)
 
 
 # testing module
-app_name = "google"
-cursor.execute('SELECT url FROM web_command WHERE name IN (?)', (app_name,))
-results = cursor.fetchall()
-print(results[0][0])
+# app_name = "google"
+# cursor.execute('SELECT url FROM web_command WHERE name IN (?)', (app_name,))
+# results = cursor.fetchall()
+# print(results[0][0])
 
 # Create a table with the desired columns
-#cursor.execute('''CREATE TABLE IF NOT EXISTS contacts (id integer primary key, name VARCHAR(200), mobile_no VARCHAR(255), email VARCHAR(255) NULL)''')
+cursor.execute('''CREATE TABLE IF NOT EXISTS contacts (id integer primary key, name VARCHAR(200), mobile_no VARCHAR(255), email VARCHAR(255) NULL)''')
 
 
 # Specify the column indices you want to import (0-based index)
@@ -44,11 +44,11 @@ print(results[0][0])
 # con.commit()
 # con.close()
 
-# query = "INSERT INTO contacts VALUES (null,'pawan', '1234567890', 'null')"
-# cursor.execute(query)
-# con.commit()
+query = "INSERT INTO contacts VALUES (null,'Behzad', '+92 3184380277', 'null')"
+cursor.execute(query)
+con.commit()
 
-# query = 'kunal'
+# query = 'laraib'
 # query = query.strip().lower()
 
 # cursor.execute("SELECT mobile_no FROM contacts WHERE LOWER(name) LIKE ? OR LOWER(name) LIKE ?", ('%' + query + '%', query + '%'))
