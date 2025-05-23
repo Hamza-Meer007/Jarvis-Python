@@ -15,7 +15,7 @@ import eel
 
 from speedtest import *
 import pvporcupine
-from hugchat.hugchat import ChatBot
+
 import struct,pyaudio
 
 
@@ -29,15 +29,6 @@ import struct,pyaudio
 
 
 
-def chatBot(query):
-    user_input = query.lower()
-    chatbot = ChatBot(cookie_path="cookies.json")
-    id = chatbot.new_conversation()
-    chatbot.change_conversation(id)
-    response =  chatbot.chat(user_input)
-    print(response)
-    speak(response)
-    return response
 
 
 

@@ -13,6 +13,7 @@ import struct
 import time
 import pvporcupine
 import pyaudio
+from hugchat.hugchat import ChatBot
 sound.init()
 
 conn = sqlite3.connect('jarvis.db')
@@ -226,3 +227,13 @@ def whatsApp(mobile_no, message, flag, name):
     pyautogui.hotkey('enter')
     speak(jarvis_message)
 
+
+def chatBot(query):
+    user_input = query.lower()
+    chatbot = ChatBot(cookie_path="engine/cookies.json")
+    id = chatbot.new_conversation()
+    chatbot.change_conversation(id)
+    response =  chatbot.chat(user_input)
+    print(response)
+    speak(response)
+    return response

@@ -4,7 +4,7 @@ from time import sleep
 import speech_recognition as sr
 import eel
 
-from .features import closeCommands, openCommands, playYoutube,findContact, whatsApp
+from .features import chatBot, closeCommands, findContact, openCommands, playYoutube, whatsApp
 from .helper import is_running, speak
 
 
@@ -82,7 +82,7 @@ def allcommands(message=1):
 
         
         else:
-            pass
+            chatBot(query)
     except Exception as e:
         print(f"Error: {e}")
 

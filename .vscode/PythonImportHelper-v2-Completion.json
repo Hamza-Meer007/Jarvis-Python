@@ -142,6 +142,14 @@
         "documentation": {}
     },
     {
+        "label": "ChatBot",
+        "importPath": "hugchat.hugchat",
+        "description": "hugchat.hugchat",
+        "isExtraImport": true,
+        "detail": "hugchat.hugchat",
+        "documentation": {}
+    },
+    {
         "label": "re",
         "kind": 6,
         "isExtraImport": true,
@@ -434,14 +442,6 @@
         "documentation": {}
     },
     {
-        "label": "ChatBot",
-        "importPath": "hugchat.hugchat",
-        "description": "hugchat.hugchat",
-        "isExtraImport": true,
-        "detail": "hugchat.hugchat",
-        "documentation": {}
-    },
-    {
         "label": "struct,pyaudio",
         "kind": 6,
         "isExtraImport": true,
@@ -607,6 +607,15 @@
         "importPath": "engine.features",
         "description": "engine.features",
         "peekOfCode": "def whatsApp(mobile_no, message, flag, name):\n    if flag == 'message':\n        target_tab = 16\n        jarvis_message = \"message send successfully to \"+name\n    elif flag == 'call':\n        target_tab = 11\n        message = ''\n        jarvis_message = \"calling to \"+name\n    else:\n        target_tab = 10",
+        "detail": "engine.features",
+        "documentation": {}
+    },
+    {
+        "label": "chatBot",
+        "kind": 2,
+        "importPath": "engine.features",
+        "description": "engine.features",
+        "peekOfCode": "def chatBot(query):\n    user_input = query.lower()\n    chatbot = ChatBot(cookie_path=\"engine/cookies.json\")\n    id = chatbot.new_conversation()\n    chatbot.change_conversation(id)\n    response =  chatbot.chat(user_input)\n    print(response)\n    speak(response)\n    return response",
         "detail": "engine.features",
         "documentation": {}
     },
@@ -2210,15 +2219,6 @@
         "description": "myenv.Scripts.pywin32_testall",
         "peekOfCode": "failures = []\n# Run a test using subprocess and wait for the result.\n# If we get an returncode != 0, we know that there was an error, but we don't\n# abort immediately - we run as many tests as we can.\ndef run_test(script, cmdline_extras):\n    dirname, scriptname = os.path.split(script)\n    # some tests prefer to be run from their directory.\n    cmd = [sys.executable, \"-u\", scriptname] + cmdline_extras\n    print(\"--- Running '%s' ---\" % script)\n    sys.stdout.flush()",
         "detail": "myenv.Scripts.pywin32_testall",
-        "documentation": {}
-    },
-    {
-        "label": "chatBot",
-        "kind": 2,
-        "importPath": "jarvis",
-        "description": "jarvis",
-        "peekOfCode": "def chatBot(query):\n    user_input = query.lower()\n    chatbot = ChatBot(cookie_path=\"cookies.json\")\n    id = chatbot.new_conversation()\n    chatbot.change_conversation(id)\n    response =  chatbot.chat(user_input)\n    print(response)\n    speak(response)\n    return response\ndef is_recycle_bin_empty():",
-        "detail": "jarvis",
         "documentation": {}
     },
     {
