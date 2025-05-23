@@ -7,7 +7,7 @@ import datetime,webbrowser,random
 from requests import get
 import time,os,pyjokes
 import psutil
-import pyautogui as pg
+
 import instadownloader,instaloader
 import wikipedia,sys
 import eel

@@ -1,13 +1,15 @@
 import os
 from time import sleep
+import time
 
+from requests import get
 import speech_recognition as sr
 import eel
 
 from .features import chatBot, closeCommands, findContact, openCommands, playYoutube, whatsApp
 from .helper import is_running, speak
 
-
+import pyautogui as pg
 
 
 
@@ -80,7 +82,41 @@ def allcommands(message=1):
                 speak("Contact not found")
                 print("Contact not found")
 
+        elif 'ip address' in query:
+            ip = get("https://api.ipify.org").text
+            print(f"Your IP Address is {ip}  ")
+            speak(f"Your IP Address is {ip}  ")
         
+        elif 'where i am' in query or 'where we are' in query or "location" in query:
+            speak('Searching Location Sir')
+            ip = get("https://api.ipify.org").text
+            print(f"Your IP Address is {ip} Sir.... ")
+            try:
+                url = 'https://get.geojs.io/v1/ip/geo/'+ip+'.json'
+                geo = get(url)
+                data = geo.json()
+
+                city = data['city']
+                country = data['country']
+                print(f"I am not sure Sir but I think that we are in {city},{country}")
+                speak(f"I am not sure Sir but I think that we are in {city},{country}")
+            except:
+                speak("Due to network issue I can't find the location")
+        elif 'switch tab' in query:
+            pg.keyDown('Alt')
+            pg.press('Tab')
+            speak("Switching tab Sir")
+            pg.keyUp('Alt')
+
+        elif 'screenshot' in query:
+            speak("Tell the name of the screen shot file Sir")
+            name = takecommand()
+            speak("Hold on Sir.. I am taking screenshot..")
+            time.sleep(3)
+            img = pg.screenshot()
+            img.save(f'images/{name}.png')
+            print("Screen shot has been saved in the main folder Sir.. You may check.")
+            speak("Screen shot has been saved in the main folder Sir.. You may check.")
         else:
             chatBot(query)
     except Exception as e:
@@ -150,10 +186,6 @@ def allcommands(message=1):
                 
 #             else:
 #                 speak("Music is already stopeed ")
-#         elif 'ip address' in query:
-#             ip = get("https://api.ipify.org").text
-#             print(f"Your IP Address is {ip}  ")
-#             speak(f"Your IP Address is {ip}  ")
 
 #         elif "open facebook" in query:
 #             speak("Opening facebook ")
@@ -224,37 +256,7 @@ def allcommands(message=1):
 #         #     # kit.sendwhatmsg(num,msg,hr,min)
 #         #     kit.sendwhatmsg("+923278797433","Hi Pumm kya hal hai",3,30)
 
-#         elif 'switch tab' in query:
-#             pg.keyDown('Alt')
-#             pg.press('Tab')
-#             speak("Switching tab Sir")
-#             pg.keyUp('Alt')
 
-#         elif 'screenshot' in query:
-#             speak("Tell the name of the screen shot file Sir")
-#             name = takecommand()
-#             speak("Hold on Sir.. I am taking screenshot..")
-#             time.sleep(3)
-#             img = pg.screenshot()
-#             img.save(f'{name}.png')
-#             print("Screen shot has been saved in the main folder Sir.. You may check.")
-#             speak("Screen shot has been saved in the main folder Sir.. You may check.")
-
-#         elif 'where i am' in query or 'where we are' in query or "location" in query:
-#             speak('Searching Location Sir')
-#             ip = get("https://api.ipify.org").text
-#             print(f"Your IP Address is {ip} Sir.... ")
-#             try:
-#                 url = 'https://get.geojs.io/v1/ip/geo/'+ip+'.json'
-#                 geo = get(url)
-#                 data = geo.json()
-
-#                 city = data['city']
-#                 country = data['country']
-#                 print(f"I am not sure Sir but I think that we are in {city},{country}")
-#                 speak(f"I am not sure Sir but I think that we are in {city},{country}")
-#             except:
-#                 speak("Due to network issue I can't find the location")
         
 #         elif 'check profile'in query or "check insta profile" in query:
 #             speak("Write the name of the profile Sir")

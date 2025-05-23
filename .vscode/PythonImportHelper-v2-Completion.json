@@ -26,6 +26,22 @@
         "documentation": {}
     },
     {
+        "label": "get",
+        "importPath": "requests",
+        "description": "requests",
+        "isExtraImport": true,
+        "detail": "requests",
+        "documentation": {}
+    },
+    {
+        "label": "get",
+        "importPath": "requests",
+        "description": "requests",
+        "isExtraImport": true,
+        "detail": "requests",
+        "documentation": {}
+    },
+    {
         "label": "speech_recognition",
         "kind": 6,
         "isExtraImport": true,
@@ -41,6 +57,15 @@
         "importPath": "eel",
         "description": "eel",
         "detail": "eel",
+        "documentation": {}
+    },
+    {
+        "label": "pyautogui",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pyautogui",
+        "description": "pyautogui",
+        "detail": "pyautogui",
         "documentation": {}
     },
     {
@@ -85,15 +110,6 @@
         "importPath": "webbrowser",
         "description": "webbrowser",
         "detail": "webbrowser",
-        "documentation": {}
-    },
-    {
-        "label": "pyautogui",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "pyautogui",
-        "description": "pyautogui",
-        "detail": "pyautogui",
         "documentation": {}
     },
     {
@@ -404,14 +420,6 @@
         "importPath": "datetime.webbrowser.random",
         "description": "datetime.webbrowser.random",
         "detail": "datetime.webbrowser.random",
-        "documentation": {}
-    },
-    {
-        "label": "get",
-        "importPath": "requests",
-        "description": "requests",
-        "isExtraImport": true,
-        "detail": "requests",
         "documentation": {}
     },
     {
