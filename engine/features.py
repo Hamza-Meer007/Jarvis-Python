@@ -236,4 +236,6 @@ def chatBot(query):
     response =  chatbot.chat(user_input)
     print(response)
     speak(response)
-    return response
+    return response  
+def get_ip():
+    return (get("https://api.ipify.org").text)

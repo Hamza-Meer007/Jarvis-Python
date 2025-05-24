@@ -83,13 +83,13 @@ def allcommands(message=1):
                 print("Contact not found")
 
         elif 'ip address' in query:
-            ip = get("https://api.ipify.org").text
+            ip = get_ip()
             print(f"Your IP Address is {ip}  ")
             speak(f"Your IP Address is {ip}  ")
         
         elif 'where i am' in query or 'where we are' in query or "location" in query:
             speak('Searching Location Sir')
-            ip = get("https://api.ipify.org").text
+            ip = get_ip()
             print(f"Your IP Address is {ip} Sir.... ")
             try:
                 url = 'https://get.geojs.io/v1/ip/geo/'+ip+'.json'
