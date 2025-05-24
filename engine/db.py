@@ -44,9 +44,9 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS contacts (id integer primary key, n
 # con.commit()
 # con.close()
 
-query = "INSERT INTO contacts VALUES (null,'Behzad', '+92 3184380277', 'null')"
-cursor.execute(query)
-con.commit()
+# query = "INSERT INTO contacts VALUES (null,'Anda', '+92 314', 'null')"
+# cursor.execute(query)
+# con.commit()
 
 # query = 'laraib'
 # query = query.strip().lower()

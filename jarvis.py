@@ -1,5 +1,4 @@
-import speedtest
-import win32com.client
+
 import pywhatkit as kit
 import winshell
 from engine.command import *
@@ -32,26 +31,13 @@ import struct,pyaudio
 
 
 
-def is_recycle_bin_empty():
-    shl = win32com.client.Dispatch("Shell.Application")
-    recycle_bin = shl.NameSpace(10)  # 10 corresponds to the Recycle Bin
-    items = recycle_bin.Items()
-
-    return items.Count == 0
 
 
 
 
 
-def check_internet_speed():
-    global results
-    st = speedtest()
-    down = st.download()
-    up = st.upload()
-    st.results.share()
-    results = st.results.dict()
 
-    return down,up
+
 
 
 

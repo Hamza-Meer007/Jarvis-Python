@@ -7,13 +7,14 @@ import pygame.mixer as sound
 import eel
 import pywhatkit as kit
 import sqlite3
-from .helper import extract_yt_term, remove_words, speak
+from .helper import extract_yt_term, remove_words, speak,replace_spaces_with_percent_s, goback, keyEvent, tapEvents, adbInput
 from .config import ASSISTANT_NAME
 import struct
 import time
 import pvporcupine
 import pyaudio
 from hugchat.hugchat import ChatBot
+from requests import get
 sound.init()
 
 conn = sqlite3.connect('jarvis.db')
@@ -239,3 +240,36 @@ def chatBot(query):
     return response  
 def get_ip():
     return (get("https://api.ipify.org").text)
+
+
+
+def makeCall(name, mobileNo):
+    mobileNo =mobileNo.replace(" ", "")
+    speak("Calling "+name)
+    command = 'adb shell am start -a android.intent.action.CALL -d tel:'+mobileNo
+    os.system(command)
+
+
+# to send message
+def sendMessage(message, mobileNo, name):
+    message = replace_spaces_with_percent_s(message)
+    mobileNo = replace_spaces_with_percent_s(mobileNo)
+    speak("sending message")
+    goback(4)
+    time.sleep(1)
+    keyEvent(3)
+    # open sms app
+    tapEvents(88, 1160)
+    #start chat
+    tapEvents(630, 1367)
+    # search mobile no
+    adbInput(mobileNo)
+    #tap on name
+    tapEvents(75, 478)
+    # tap on input
+    tapEvents(290, 872)
+    #message
+    adbInput(message)
+    #send
+    tapEvents(662, 883)
+    speak("message send successfully to "+name)

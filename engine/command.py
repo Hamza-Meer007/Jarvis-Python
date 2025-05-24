@@ -6,8 +6,16 @@ from requests import get
 import speech_recognition as sr
 import eel
 
-from .features import chatBot, closeCommands, findContact, openCommands, playYoutube, whatsApp
-from .helper import is_running, speak
+from .features import chatBot, closeCommands, findContact, makeCall, openCommands, playYoutube, whatsApp, sendMessage, get_ip
+from .helper import is_running, speak, is_recycle_bin_empty, check_internet_speed
+import webbrowser
+import random
+import psutil
+import winshell
+import sys
+import instaloader
+import wikipedia
+import pyjokes
 
 import pyautogui as pg
 
@@ -62,22 +70,35 @@ def allcommands(message=1):
             closeCommands(query)
         elif "on youtube" in query:
             playYoutube(query)
-        elif "send message" in query or "phone call" in query or "video call" in query:
+        elif "send message" in query or "phone call" in query or "video call" in query or "send sms" in query:
             contact_no, name = findContact(query)
             if(contact_no != 0):
-
-                flag = ""
-                if "send message" in query:
-                    flag = 'message'
-                    speak("what message to send")
-                    query = takecommand()
-                                    
-                elif "phone call" in query:
-                    flag = 'call'
-                else:
-                    flag = 'video call'
-                                    
-                whatsApp(contact_no, query, flag, name)
+                speak("What mode to choose Whatsapp or Mobile")
+                preference = takecommand()
+                preference = preference.lower()
+                print(preference)
+                if 'whatsapp' in preference:
+                    
+                    flag = ""
+                    if "send message" in query:
+                        flag = 'message'
+                        speak("what message to send")
+                        query = takecommand()
+                                        
+                    elif "phone call" in query:
+                        flag = 'call'
+                    else:
+                        flag = 'video call'
+                                        
+                    whatsApp(contact_no, query, flag, name)
+                    
+                elif 'mobile' in preference:
+                    if "send message" in query or "send sms" in query: 
+                        speak("what message to send")
+                        message = takecommand()
+                        sendMessage(message, contact_no, name)
+                    elif "phone call" in query:
+                        makeCall(name, contact_no)
             else:
                 speak("Contact not found")
                 print("Contact not found")
@@ -117,6 +138,115 @@ def allcommands(message=1):
             img.save(f'images/{name}.png')
             print("Screen shot has been saved in the main folder Sir.. You may check.")
             speak("Screen shot has been saved in the main folder Sir.. You may check.")
+        elif " shutdown" in query:
+            speak("Shutting down Sir.... Goodbye!")
+            time.sleep(3)
+            os.system("shutdown /s /t 1")
+        elif "restart" in query :
+            speak("Restarting sir....")
+            time.sleep(3)
+            os.system("restart /r /t 1")
+        elif 'check profile'in query or "check insta profile" in query:
+            speak("Write the name of the profile Sir")
+            id = input("Write the profile name: ")
+            speak(f"Opening profile Sir")
+            webbrowser.open(f"www.instagram.com/{id}")
+            time.sleep(6)
+            speak("Do you want to download the profile picture Sir")
+            condition = takecommand()
+            if 'yes' in condition:
+                img = instaloader.Instaloader()
+        
+                img.download_profile(id,profile_pic_only=True)
+                speak("Downloading Picture Sir!")
+                time.sleep(3)
+                speak("Picture has been downloaded in the main folder")
+        elif "where is" in query:
+            query = query.replace("where is","")
+            location=query
+            speak(f"Locating {location} Sir!....")
+            time.sleep(2)
+            webbrowser.open(f"https://google.co.in/maps/place/{location}")
+        elif "wikipedia" in query:
+            speak("Searching Wikipedia ")
+            query = query.replace("wikipedia","")
+            result = wikipedia.summary(query,sentences=2)
+            print(result)
+            speak("According to wikipedia" + result)
+        elif "hide" in query or "visible" in query:
+            speak("Do you want to hide the files or make the files visible?")
+            chk = takecommand()
+            if 'hide' in chk:
+                os.system('attrib +h /s /d')
+                speak("Sir ,All the files in the folder are hidden now")
+            elif 'visible' in chk:
+                os.system('attrib -h /s /d')
+                speak("Sir ,All the files in the folder are visible now")
+            elif 'leave' in chk:
+                speak("Ok Sir!..")
+        elif 'sleep' in query or 'exit' in query:
+            print("Thanks for using me Sir....See you soon")
+            speak("Thanks for using me Sir....See you soon")
+            sys.exit()
+        elif 'battery' in query :
+            battery = psutil.sensors_battery()
+            percentage = battery.percent
+            type(percentage)
+            print(f'Sir our system has {percentage} percent battery')
+            speak(f'Sir our system has {percentage} percent battery')
+            if percentage >75:
+                print("We have lot of power to do work")
+                speak("We have lot of power to do work")
+            elif percentage >50 or percentage <=75:
+                print("We have enough power to do work")
+                speak("We have enough power to do work")
+            elif percentage > 20 or percentage <=50:
+                print("We have low power Sir")
+                speak("We have low power Sir")
+            else:
+                print("Power too low sir you should charge")
+                speak("Power too low sir you should charge")
+
+        elif 'internet speed' in query or 'speed' in query:
+            speak('Checking Internet Speed Sir')
+        
+        
+            results = check_internet_speed()
+
+            
+            print(f"Download speed: {results['download'] / 1000000:.2f} Mbps")
+            speak(f"Download speed: {results['download'] / 1000000:.2f} Mbps")
+            
+            
+            print(f"Upload speed: {results['upload'] / 1000000:.2f} Mbps")
+            speak(f"Upload speed: {results['upload'] / 1000000:.2f} Mbps")
+            
+        elif 'recycle' in query:
+            if is_recycle_bin_empty():
+                print("The Recycle Bin is already empty.")
+                speak("The Recycle Bin is already empty.")
+            else:
+                speak('In progess Sir')
+                winshell.recycle_bin().empty(confirm=False,show_progress=False,sound=True)
+                print("Sir, Recycle bin has successfully emptied")
+                speak("Sir, Recycle bin has successfully emptied")
+        elif 'volume up' in query:
+            pg.press('volume up')
+            speak('Done Sir')
+            
+        elif 'volume down' in query:
+            pg.press('volume down')
+            speak('Done Sir')
+
+        elif 'volume mute' in query or 'mute' in query:
+            pg.press('volume mute')
+            speak('Done Sir')
+        
+        elif 'volume full' in query:
+            for x in range(50):
+                pg.press('volumeup')
+                sleep(0.1) 
+            speak('Done Sir')
         else:
             chatBot(query)
     except Exception as e:
@@ -203,14 +333,6 @@ def allcommands(message=1):
 #             speak("Sir...... What do you want to search?")
 #             cm = takecommand()
 #             webbrowser.open(f"www.google.com/search?q={cm}")
-#         elif " shutdown" in query:
-#             speak("Shutting down Sir.... Goodbye!")
-#             time.sleep(3)
-#             os.system("shutdown /s /t 1")
-#         elif "restart" in query :
-#             speak("Restarting sir....")
-#             time.sleep(3)
-#             os.system("restart /r /t 1")
 #         elif 'set alarm' in query:
 #             speak("Tell the time Sir...")
 #             alarm = str(takecommand())
@@ -258,107 +380,6 @@ def allcommands(message=1):
 
 
         
-#         elif 'check profile'in query or "check insta profile" in query:
-#             speak("Write the name of the profile Sir")
-#             id = input("Write the profile name: ")
-#             speak(f"Opening profile Sir")
-#             webbrowser.open(f"www.instagram.com/{id}")
-#             time.sleep(6)
-#             speak("Do you want to download the profile picture Sir")
-#             condition = takecommand()
-#             if 'yes' in condition:
-#                 img = instaloader.Instaloader()
-        
-#                 img.download_profile(id,profile_pic_only=True)
-#                 speak("Downloading Picture Sir!")
-#                 time.sleep(3)
-#                 speak("Picture has been downloaded in the main folder")
-#         elif "where is" in query:
-#             query = query.replace("where is","")
-#             location=query
-#             speak(f"Locating {location} Sir!....")
-#             time.sleep(2)
-#             webbrowser.open(f"https://google.co.in/maps/place/{location}")
-#         elif "wikipedia" in query:
-#             speak("Searching Wikipedia ")
-#             query = query.replace("wikipedia","")
-#             result = wikipedia.summary(query,sentences=2)
-#             print(result)
-#             speak("According to wikipedia" + result)
-#         elif "hide" in query or "visible" in query:
-#             speak("Do you want to hide the files or make the files visible?")
-#             chk = takecommand()
-#             if 'hide' in chk:
-#                 os.system('attrib +h /s /d')
-#                 speak("Sir ,All the files in the folder are hidden now")
-#             elif 'visible' in chk:
-#                 os.system('attrib -h /s /d')
-#                 speak("Sir ,All the files in the folder are visible now")
-#             elif 'leave' in chk:
-#                 speak("Ok Sir!..")
-#         elif 'sleep' in query or 'exit' in query:
-#             print("Thanks for using me Sir....See you soon")
-#             speak("Thanks for using me Sir....See you soon")
-#             sys.exit()
-#         elif 'battery' in query :
-#             battery = psutil.sensors_battery()
-#             percentage = battery.percent
-#             type(percentage)
-#             print(f'Sir our system has {percentage} percent battery')
-#             speak(f'Sir our system has {percentage} percent battery')
-#             if percentage >75:
-#                 print("We have lot of power to do work")
-#                 speak("We have lot of power to do work")
-#             elif percentage >50 or percentage <=75:
-#                 print("We have enough power to do work")
-#                 speak("We have enough power to do work")
-#             elif percentage > 20 or percentage <=50:
-#                 print("We have low power Sir")
-#                 speak("We have low power Sir")
-#             else:
-#                 print("Power too low sir you should charge")
-#                 speak("Power too low sir you should charge")
-
-#         elif 'internet speed' in query or 'speed' in query:
-#             speak('Checking Internet Speed Sir')
-        
-        
-#             download_speed, upload_speed = check_internet_speed()
-
-            
-#             print(f"Download speed: {results['download'] / 1000000:.2f} Mbps")
-#             speak(f"Download speed: {results['download'] / 1000000:.2f} Mbps")
-            
-            
-#             print(f"Upload speed: {results['upload'] / 1000000:.2f} Mbps")
-#             speak(f"Upload speed: {results['upload'] / 1000000:.2f} Mbps")
-            
-#         elif 'recycle' in query:
-#             if is_recycle_bin_empty():
-#                 print("The Recycle Bin is already empty.")
-#                 speak("The Recycle Bin is already empty.")
-#             else:
-#                 speak('In progess Sir')
-#                 winshell.recycle_bin().empty(confirm=False,show_progress=False,sound=True)
-#                 print("Sir, Recycle bin has successfully emptied")
-#                 speak("Sir, Recycle bin has successfully emptied")
-#         elif 'volume up' in query:
-#             pg.press('volume up')
-#             speak('Done Sir')
-            
-#         elif 'volume down' in query:
-#             pg.press('volume down')
-#             speak('Done Sir')
-
-#         elif 'volume mute' in query or 'mute' in query:
-#             pg.press('volume mute')
-#             speak('Done Sir')
-        
-#         elif 'volume full' in query:
-#             for x in range(50):
-#                 pg.press('volumeup')
-#                 sleep(0.1) 
-#             speak('Done Sir')
 
 #         else:
 #             res = chatBot(query)
