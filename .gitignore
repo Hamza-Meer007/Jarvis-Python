@@ -2,7 +2,15 @@ __pycache__
 myenv
 /engine/cookies.json
 /images
-/auth/sample
-/auth/trainer
+
+# Database files
+*.db
+jarvis.db
+
+# Auth related folders
+/engine/auth/sample/
+/engine/auth/sample
+/engine/auth/trainer/
+/engine/auth/trainer
 
 
