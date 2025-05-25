@@ -1,7 +1,7 @@
 import eel
 import os
 from engine.command import allcommands
-import subprocess
+import subprocess,time
 from engine.features import playassistantsound
 from engine.helper import speak
 from engine.auth import recognize
@@ -13,6 +13,7 @@ def start():
     @eel.expose
     def init():
         # subprocess.call([r'device.bat'])
+        time.sleep(5)
         eel.hideLoader()
         speak("Ready for Face Authentication")
         flag = recognize.AuthenticateFace()

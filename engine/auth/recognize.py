@@ -57,7 +57,7 @@ def AuthenticateFace():
             id, accuracy = recognizer.predict(converted_image[y:y+h, x:x+w])
 
             # Check if accuracy is less them 100 ==> "0" is perfect match
-            if (accuracy < 100):
+            if (accuracy < 50):
                 id = names[id]
                 accuracy = "  {0}%".format(round(100 - accuracy))
                 flag = 1

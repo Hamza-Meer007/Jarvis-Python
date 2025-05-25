@@ -1,21 +1,4 @@
 
-import pywhatkit as kit
-import winshell
-from engine.command import *
-import datetime,webbrowser,random
-from requests import get
-import time,os,pyjokes
-import psutil
-
-import instadownloader,instaloader
-import wikipedia,sys
-import eel
-
-
-from speedtest import *
-import pvporcupine
-
-import struct,pyaudio
 
 
 

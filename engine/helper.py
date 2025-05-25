@@ -85,10 +85,10 @@ def is_recycle_bin_empty():
 
 def check_internet_speed():
     global results
-    st = speedtest()
+    st = speedtest.Speedtest()
     down = st.download()
     up = st.upload()
     st.results.share()
     results = st.results.dict()
 
-    return down,up
+    return down, up
