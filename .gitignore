@@ -2,3 +2,7 @@ __pycache__
 myenv
 /engine/cookies.json
 /images
+/auth/sample/*
+/auth/trainer/*
+jarvis.db
+

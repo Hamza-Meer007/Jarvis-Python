@@ -1,6 +1,6 @@
 import multiprocessing
 import subprocess
-
+# from main import init
 from engine.features import hotword
 
 def start_jarvis():
@@ -17,7 +17,6 @@ if __name__ == '__main__':
     p2 = multiprocessing.Process(target=listen_hotword)
 
     p1.start()
-    subprocess.call([r'device.bat'])
     p2.start()
     p1.join()
 
